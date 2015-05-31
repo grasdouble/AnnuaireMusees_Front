@@ -12,5 +12,7 @@ angular
         'ngRoute',
         'ngTouch',
         'duScroll',
-        'ui.bootstrap'
+        'ui.bootstrap',
+        'ui.grid'
+
     ]);

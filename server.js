@@ -24,6 +24,7 @@ app.all('/*', function (req, res) {
 });
 
 
+
 // start app ===============================================
 app.listen(port);
 console.log('Magic happens on port ' + port); 			// shoutout to the user

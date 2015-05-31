@@ -2,19 +2,20 @@
   "name": "AnnuaireMusee",
   "version": "0.0.1",
   "dependencies": {
-    "angular": "1.4.0-rc.1",
-    "angular-animate": "1.4.0-rc.1",
-    "angular-route": "1.4.0-rc.1",
-    "angular-touch": "1.4.0-rc.1",
+    "angular": "1.4.0",
+    "angular-animate": "1.4.0",
+    "angular-route": "1.4.0",
+    "angular-touch": "1.4.0",
     "angular-scroll": "0.6.5",
     "animate.css": "~3.2.6",
     "angular-bootstrap": "~0.12.1",
     "bootstrap": "~3.3.4",
-    "font-awesome": "~4.3.0"
+    "font-awesome": "~4.3.0",
+    "angular-ui-grid": "~3.0.0-rc.21"
   },
   "devDependencies": {},
   "resolutions": {
-    "angular": "1.4.0-rc.1"
+    "angular": "1.4.0"
   },
   "appPath": "app",
   "moduleName": "AnnuaireMuseeApp"

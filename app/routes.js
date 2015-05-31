@@ -8,6 +8,16 @@ angular.module('AnnuaireMuseeApp').config(function ($routeProvider, $locationPro
             controller: 'HomeController',
             controllerAs: 'home'
         })
+        .when('/musee', {
+            templateUrl: 'app/views/musee/musee.html',
+            controller: 'MuseeController',
+            controllerAs: 'musee'
+        })
+        .when('/categorie', {
+            templateUrl: 'app/views/categorie/categorie.html',
+            controller: 'CategorieController',
+            controllerAs: 'categorie'
+        })
         .otherwise({
             redirectTo: '/'
         });

@@ -37,6 +37,7 @@ module.exports = function (grunt) {
                 src: [
                     'app/**/*.css',
                     '!app/vendors/**/*.css',
+                    '!app/views/musee/components/amListMusee/amListMusee.css'
                 ]
             }
         },
@@ -123,6 +124,7 @@ module.exports = function (grunt) {
                 src: [
                     'tmp/components/**/font-awesome.min.css',
                     'tmp/components/**/bootstrap.min.css',
+                    'tmp/components/**/ui-grid.min.css',
                     'tmp/components/**/animate.min.css'
                 ],
                 dest: 'app/vendors/css/',
@@ -135,6 +137,7 @@ module.exports = function (grunt) {
 
                     'tmp/components/**/angular*.min.js',
                     'tmp/components/**/ui-bootstrap.js',
+                    'tmp/components/**/ui-grid.min.js',
                     'tmp/components/**/sticky.min.js',
                     'tmp/components/angular-i18n/angular-locale_fr-fr.js'
 
@@ -151,9 +154,23 @@ module.exports = function (grunt) {
                     'tmp/components/**/fontawesome-webfont.svg',
                     'tmp/components/**/fontawesome-webfont.ttf',
                     'tmp/components/**/fontawesome-webfont.woff',
-                    'tmp/components/**/fontawesome-webfont.woff2'
+                    'tmp/components/**/fontawesome-webfont.woff2',
+                    'tmp/components/**/ui-grid.svg',
+                    'tmp/components/**/ui-grid.ttf',
+                    'tmp/components/**/ui-grid.woff'
                 ],
                 dest: 'fonts/',
+                expand: true,
+                flatten: true,
+                filter: 'isFile'
+            },
+            uiGridFONT: {
+                src: [
+                    'tmp/components/**/ui-grid.svg',
+                    'tmp/components/**/ui-grid.ttf',
+                    'tmp/components/**/ui-grid.woff'
+                ],
+                dest: 'dist/',
                 expand: true,
                 flatten: true,
                 filter: 'isFile'
@@ -232,11 +249,14 @@ module.exports = function (grunt) {
         sro_create_angular_components: {
             AnnuaireMuseeApp: {
                 views: [
-                    "app/views/home"
+                    "app/views/home",
+                    "app/views/musee",
+                    "app/views/categorie"
                 ],
                 directives: [
-                    "app/views/home/components/header",
-                    "app/views/home/components/menu"
+                    "app/components/amEntete",
+                    "app/components/amMenu",
+                    "app/views/musee/components/amListMusee"
                 ]
             }
         }
@@ -252,7 +272,8 @@ module.exports = function (grunt) {
         'uglify',
         'clean:end-build',
         'jshint',
-        'csslint'
+        'csslint',
+        "copy:uiGridFONT"
     ]);
 
     grunt.registerTask('default + express + watch', [
@@ -266,7 +287,8 @@ module.exports = function (grunt) {
         "clean:vendors",
         "copy:bowerCSS",
         "copy:bowerJS",
-        "copy:bowerFONT"
+        "copy:bowerFONT",
+        "copy:uiGridFONT"
     ]);
 
 
