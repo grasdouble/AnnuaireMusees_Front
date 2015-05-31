@@ -256,7 +256,10 @@ module.exports = function (grunt) {
                 directives: [
                     "app/components/amEntete",
                     "app/components/amMenu",
-                    "app/views/musee/components/amListMusee"
+                    "app/views/musee/components/amListMusee",
+                    "app/views/musee/components/amEditMusee",
+                    "app/views/categorie/components/amListCategorie",
+                    "app/views/categorie/components/amEditCategotie"
                 ]
             }
         }
