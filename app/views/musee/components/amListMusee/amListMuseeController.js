@@ -1,17 +1,23 @@
 angular.module('AnnuaireMuseeApp').controller('AmListMuseeController',
-    function (AmListMuseeService) {
+    function (AmListMuseeService,$scope,$q,$interval) {
 
         var vm = this;
 
         vm.gridOptions = {
         };
-
+        vm.gridOptions.appScopeProvider=vm;
         vm.gridOptions.columnDefs = [
-            {name:'id'},
-            {name:'name',field:'nom'},
+            {name:'id', enableCellEdit: false},
+            {name:'nom', displayName: 'Nom'},
             {name:'description'}, // showing backwards compatibility with 2.x.  you can use field in place of name
-            {name: 'categories'}
+            {name: 'categories',enableCellEdit: false}
         ];
+
+        vm.gridOptions.onRegisterApi = function(gridApi){
+            //set gridApi on scope
+            vm.gridApi = gridApi;
+            gridApi.rowEdit.on.saveRow($scope, vm.saveRow);
+        };
 
 
 
@@ -25,6 +31,10 @@ angular.module('AnnuaireMuseeApp').controller('AmListMuseeController',
                 function(data) {
                     console.log('musees retrieval failed.');
                 });
+        };
+
+        vm.saveRow = function( rowEntity ) {
+            vm.gridApi.rowEdit.setSavePromise( rowEntity, AmListMuseeService.updateMusee(rowEntity) );
         };
 
         vm.getListMusee();

@@ -13,6 +13,9 @@ angular
         'ngTouch',
         'duScroll',
         'ui.bootstrap',
-        'ui.grid'
+        'ui.grid',
+        'ui.grid.edit',
+        'ui.grid.rowEdit',
+        'ui.grid.cellNav'
 
     ]);
