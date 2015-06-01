@@ -26,10 +26,6 @@ angular.module('AnnuaireMuseeApp').controller('AmListMuseeController',
                                     musees[i].categories = ctrlMusee.listCateg[j].id;
                                 }
                             }
-
-                            //musees[i].categories = ctrlMusee.listCateg[ctrlMusee.listCateg.indexOf(musees[i].categories[0])].id ;
-                            //ctrlMusee.listCateg.indexOf(musees[i].categories[0]);
-                            //musees[i].categories = musees[i].categories[0].label === 'categ 1' ? 1 : 2;
                         }
                     }
                     ctrlMusee.gridOptions.data = musees;
@@ -74,6 +70,21 @@ angular.module('AnnuaireMuseeApp').controller('AmListMuseeController',
         ctrlMusee.getListCategorie();
         ctrlMusee.getListMusee();
 
+
+        $scope.modalShown = false;
+        $scope.toggleModal = function() {
+            $scope.modalShown = !$scope.modalShown;
+        };
+
+        $scope.createMusee = function(nom, description){
+            AmListMuseeService.createMusee(nom,description).then(function (retour) {
+                $scope.modalShown = false;
+                ctrlMusee.getListMusee();
+            },function (data) {
+                console.log('categories retrieval failed.');
+            });
+
+        };
     }
 ).filter("mapCategorie", function (AmListCategorieService) {
         var data = null, serviceInvoked = false;
@@ -115,4 +126,33 @@ angular.module('AnnuaireMuseeApp').controller('AmListMuseeController',
         }
 
         return filterStub;
+    });
+
+angular.module('AnnuaireMuseeApp').directive('modal', function () {
+        return {
+            restrict: 'E',
+            scope: {
+                show: '=info'
+            },
+            replace: true, // Replace with the template below
+            transclude: true, // we want to insert custom content inside the directive
+            link: function(scope, element, attrs) {
+                scope.dialogStyle = {};
+                if (attrs.width){
+                    scope.dialogStyle.width = attrs.width;
+                }
+                if (attrs.height){
+                    scope.dialogStyle.height = attrs.height;
+                }
+                scope.hideModal = function() {
+                    scope.show = false;
+                };
+            },
+            template: "<div class='modal-header' ng-show='show'>" +
+            "<div class='ng-modal-overlay' ng-click='hideModal()'></div>" +
+            "<div class='ng-modal-dialog' ng-style='dialogStyle'>" +
+                "<div class='ng-modal-close' ng-click='hideModal()'>X</div>" +
+                "<div class='ng-modal-dialog-content' ng-transclude></div>" +
+            "</div></div>"
+        };
     });

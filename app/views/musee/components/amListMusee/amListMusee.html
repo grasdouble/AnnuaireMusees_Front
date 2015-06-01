@@ -1,3 +1,20 @@
 <div class="amListMusee">
 <div id="grid1" ui-grid="amListMusee.gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav class="grid" ></div>
+    <button ng-click='toggleModal()'>Ajouter un musée</button>
+
+    <modal title="Ajout d'un musée" info="modalShown">
+        <form role="form" novalidate>
+            <div class="form-group">
+                <label for="nom">Nom</label>
+                <input type="text" class="form-control" id="nom" placeholder="Nom du musée" ng-model="nom" />
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" class="form-control" id="description"
+                       placeholder="Description du musée" ng-model="description"/>
+            </div>
+            <input type="submit" ng-click="console.log(nom)" value="Save" />
+            <input type="submit" class="btn btn-default" ng-click="createMusee(nom,description);nom='';description='';"/>
+        </form>
+    </modal>
 </div>
