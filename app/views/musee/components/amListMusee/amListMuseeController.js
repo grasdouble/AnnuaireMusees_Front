@@ -37,6 +37,7 @@ angular.module('AnnuaireMuseeApp').controller('AmListMuseeController',
         };
 
         //Récupération de la liste des catégories
+        var removeTemplate = '<input type="button" value="remove" ng-click="grid.appScope.Delete(row)" />';
         ctrlMusee.getListCategorie = function () {
             AmListCategorieService.getListCategorie()
                 .then(function (categories) {
@@ -53,7 +54,8 @@ angular.module('AnnuaireMuseeApp').controller('AmListMuseeController',
                             cellFilter: 'mapCategorie',
                             editDropdownValueLabel: 'label',
                             editDropdownOptionsArray: ctrlMusee.listCateg
-                        }
+                        },
+                        {name:'action', enableCellEdit: false,displayName: "Action", cellTemplate: removeTemplate}
                     ];
                     console.log('categories returned to controller.');
                 },
@@ -61,11 +63,22 @@ angular.module('AnnuaireMuseeApp').controller('AmListMuseeController',
                     console.log('categories retrieval failed.');
                 });
         };
+        $scope.Delete = function(row) {
+
+            var index = ctrlMusee.gridOptions.data.indexOf(row.entity);
+            AmListMuseeService.deleteMusee(row.entity.id).then(function (musees) {
+                ctrlMusee.gridOptions.data.splice(index, 1);
+            });
+
+
+        };
 
         //Enregistrement des modifications d'un musée
         ctrlMusee.saveRow = function (rowEntity) {
             ctrlMusee.gridApi.rowEdit.setSavePromise(rowEntity, AmListMuseeService.updateMusee(rowEntity));
         };
+
+
 
         ctrlMusee.getListCategorie();
         ctrlMusee.getListMusee();

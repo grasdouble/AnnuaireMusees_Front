@@ -5,7 +5,8 @@ angular.module('AnnuaireMuseeApp').service('AmListMuseeService',
             musees: [],
             getListMusee: getListMusee,
             updateMusee: updateMusee,
-            createMusee: createMusee
+            createMusee: createMusee,
+            deleteMusee: deleteMusee
         };
         return service;
 
@@ -33,6 +34,20 @@ angular.module('AnnuaireMuseeApp').service('AmListMuseeService',
                 }).
                 error(function () {
                     defferer.reject('Failed to update Museum');
+                });
+            return defferer.promise;
+        }
+
+        function deleteMusee(rowDelete) {
+            var defferer = $q.defer();
+            console.log(rowDelete);
+            $http.delete('http://annuaire-musees-server.dev/musee/'+rowDelete).
+                success(function (data) {
+                    console.log(data);
+                    defferer.resolve(data);
+                }).
+                error(function () {
+                    defferer.reject('Failed to delete Museum');
                 });
             return defferer.promise;
         }
