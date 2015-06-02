@@ -40,7 +40,6 @@ angular.module('AnnuaireMuseeApp').service('AmListMuseeService',
 
         function deleteMusee(rowDelete) {
             var defferer = $q.defer();
-            console.log(rowDelete);
             $http.delete('http://annuaire-musees-server.dev/musee/'+rowDelete).
                 success(function (data) {
                     console.log(data);
@@ -54,7 +53,6 @@ angular.module('AnnuaireMuseeApp').service('AmListMuseeService',
 
         function createMusee(nom, description) {
             var defferer = $q.defer();
-
             $http.post('http://annuaire-musees-server.dev/musee/', {nom:nom,description:description}).
                 success(function (data) {
                     console.log(data);

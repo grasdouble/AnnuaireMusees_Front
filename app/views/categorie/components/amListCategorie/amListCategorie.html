@@ -1,4 +1,15 @@
 <div class="amListCategorie">
     <div id="grid1" ui-grid="amListCategorie.gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav
          class="grid"></div>
+    <button ng-click='toggleModal()'>Ajouter une catégorie</button>
+
+    <modal2 title="Ajout d'une catégorie" info="modalShown">
+        <form role="form" novalidate>
+            <div class="form-group">
+                <label for="label">label</label>
+                <input type="text" class="form-control" id="label" placeholder="label de la catégorie" ng-model="label" />
+            </div>
+            <input type="submit" class="btn btn-default" ng-click="createCategorie(label);label='';"/>
+        </form>
+    </modal2>
 </div>

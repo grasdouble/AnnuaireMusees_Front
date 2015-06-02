@@ -94,7 +94,7 @@ angular.module('AnnuaireMuseeApp').controller('AmListMuseeController',
                 $scope.modalShown = false;
                 ctrlMusee.getListMusee();
             },function (data) {
-                console.log('categories retrieval failed.');
+                console.log('museum retrieval failed.');
             });
 
         };
