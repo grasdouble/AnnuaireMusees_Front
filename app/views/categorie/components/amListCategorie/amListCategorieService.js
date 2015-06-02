@@ -10,6 +10,7 @@ angular.module('AnnuaireMuseeApp').service('AmListCategorieService',
         };
         return service;
 
+        //Récupération de la liste des catégories
         function getListCategorie() {
             var defferer = $q.defer();
 
@@ -24,12 +25,25 @@ angular.module('AnnuaireMuseeApp').service('AmListCategorieService',
             return defferer.promise;
         }
 
+        //Création d'une catégorie
+        function createCategorie(label) {
+            var defferer = $q.defer();
+            $http.post('http://back.annuaire.webizone.fr/categorie/', {label: label}).
+                success(function (data) {
+                    defferer.resolve(data);
+                }).
+                error(function () {
+                    defferer.reject('Failed to create Categorie');
+                });
+            return defferer.promise;
+        }
+
+        //Update d'une catégorie
         function updateCategorie(rowUpdate) {
             var defferer = $q.defer();
 
             $http.put('http://back.annuaire.webizone.fr/categorie/', rowUpdate).
                 success(function (data) {
-                    console.log(data);
                     defferer.resolve(data);
                 }).
                 error(function () {
@@ -38,12 +52,12 @@ angular.module('AnnuaireMuseeApp').service('AmListCategorieService',
             return defferer.promise;
         }
 
+        //Suppression d'une catégorie
         function deleteCategorie(rowDelete) {
             var defferer = $q.defer();
 
-            $http.delete('http://back.annuaire.webizone.fr/categorie/'+rowDelete).
+            $http.delete('http://back.annuaire.webizone.fr/categorie/' + rowDelete).
                 success(function (data) {
-                    console.log(data);
                     defferer.resolve(data);
                 }).
                 error(function () {
@@ -52,18 +66,6 @@ angular.module('AnnuaireMuseeApp').service('AmListCategorieService',
             return defferer.promise;
         }
 
-        function createCategorie(label) {
-            var defferer = $q.defer();
-            console.log(label);
-            $http.post('http://back.annuaire.webizone.fr/categorie/', {label:label}).
-                success(function (data) {
-                    console.log(data);
-                    defferer.resolve(data);
-                }).
-                error(function () {
-                    defferer.reject('Failed to create Categorie');
-                });
-            return defferer.promise;
-        }
+
     }
 );

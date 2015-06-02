@@ -3,16 +3,7 @@ angular.module('AnnuaireMuseeApp').controller('AmListMuseeController',
 
         var ctrlMusee = this;
         ctrlMusee.listCateg = null;
-
         ctrlMusee.gridOptions = {};
-
-
-        ctrlMusee.gridOptions.onRegisterApi = function (gridApi) {
-            //set gridApi on scope
-            ctrlMusee.gridApi = gridApi;
-            gridApi.rowEdit.on.saveRow($scope, ctrlMusee.saveRow);
-        };
-
 
         //Récupération de la liste des musées
         ctrlMusee.getListMusee = function () {
@@ -20,7 +11,6 @@ angular.module('AnnuaireMuseeApp').controller('AmListMuseeController',
                 .then(function (musees) {
                     for (i = 0; i < musees.length; i++) {
                         if (musees[i].categories !== null) {
-
                             for (j = 0; j < ctrlMusee.listCateg.length; j++) {
                                 if (musees[i].categories.label === ctrlMusee.listCateg[j].label) {
                                     musees[i].categories = ctrlMusee.listCateg[j].id;
@@ -36,7 +26,7 @@ angular.module('AnnuaireMuseeApp').controller('AmListMuseeController',
                 });
         };
 
-        //Récupération de la liste des catégories
+        //Récupération de la liste des catégories pour la liste déroulante
         var removeTemplate = '<input type="button" value="remove" ng-click="grid.appScope.Delete(row)" />';
         ctrlMusee.getListCategorie = function () {
             AmListCategorieService.getListCategorie()
@@ -45,7 +35,7 @@ angular.module('AnnuaireMuseeApp').controller('AmListMuseeController',
                     ctrlMusee.gridOptions.columnDefs = [
                         {name: 'id', enableCellEdit: false},
                         {name: 'nom', displayName: 'Nom'},
-                        {name: 'description'}, // showing backwards compatibility with 2.x.  you can use field in place of name
+                        {name: 'description'},
                         {
                             name: 'categories',
                             displayName: 'Categorie',
@@ -55,7 +45,7 @@ angular.module('AnnuaireMuseeApp').controller('AmListMuseeController',
                             editDropdownValueLabel: 'label',
                             editDropdownOptionsArray: ctrlMusee.listCateg
                         },
-                        {name:'action', enableCellEdit: false,displayName: "Action", cellTemplate: removeTemplate}
+                        {name: 'action', enableCellEdit: false, displayName: "Action", cellTemplate: removeTemplate}
                     ];
                     console.log('categories returned to controller.');
                 },
@@ -63,43 +53,49 @@ angular.module('AnnuaireMuseeApp').controller('AmListMuseeController',
                     console.log('categories retrieval failed.');
                 });
         };
-        $scope.Delete = function(row) {
 
-            var index = ctrlMusee.gridOptions.data.indexOf(row.entity);
-            AmListMuseeService.deleteMusee(row.entity.id).then(function (musees) {
-                ctrlMusee.gridOptions.data.splice(index, 1);
-            });
-
-
-        };
-
-        //Enregistrement des modifications d'un musée
-        ctrlMusee.saveRow = function (rowEntity) {
-            ctrlMusee.gridApi.rowEdit.setSavePromise(rowEntity, AmListMuseeService.updateMusee(rowEntity));
-        };
-
-
-
-        ctrlMusee.getListCategorie();
-        ctrlMusee.getListMusee();
-
-
-        $scope.modalShown = false;
-        $scope.toggleModal = function() {
-            $scope.modalShown = !$scope.modalShown;
-        };
-
-        $scope.createMusee = function(nom, description){
-            AmListMuseeService.createMusee(nom,description).then(function (retour) {
+        //Création d'un musée
+        $scope.createMusee = function (nom, description) {
+            AmListMuseeService.createMusee(nom, description).then(function (retour) {
                 $scope.modalShown = false;
                 ctrlMusee.getListMusee();
-            },function (data) {
+            }, function (data) {
                 console.log('museum retrieval failed.');
             });
 
         };
+
+        //Enregistrement des modifications d'un musée
+        ctrlMusee.gridOptions.onRegisterApi = function (gridApi) {
+            //set gridApi on scope
+            ctrlMusee.gridApi = gridApi;
+            gridApi.rowEdit.on.saveRow($scope, ctrlMusee.saveRow);
+        };
+        ctrlMusee.saveRow = function (rowEntity) {
+            ctrlMusee.gridApi.rowEdit.setSavePromise(rowEntity, AmListMuseeService.updateMusee(rowEntity));
+        };
+
+        //Suppression d'un musée
+        $scope.Delete = function (row) {
+            var index = ctrlMusee.gridOptions.data.indexOf(row.entity);
+            AmListMuseeService.deleteMusee(row.entity.id).then(function (musees) {
+                ctrlMusee.gridOptions.data.splice(index, 1);
+            });
+        };
+
+        //Chargement des données
+        ctrlMusee.getListCategorie();
+        ctrlMusee.getListMusee();
+
+        //Gestion de l'affichage de la fenetre modale
+        $scope.modalShown = false;
+        $scope.toggleModal = function () {
+            $scope.modalShown = !$scope.modalShown;
+        };
+
     }
 ).filter("mapCategorie", function (AmListCategorieService) {
+        //Mise en place d'un filter pour la liste déroulante  'categorie'
         var data = null, serviceInvoked = false;
 
         function realFilter(value) {
@@ -115,7 +111,8 @@ angular.module('AnnuaireMuseeApp').controller('AmListMuseeController',
                 return retour;
             }
         }
-
+        //Si les données de la liste n'ont pas déjà été chargées, on le fait sinon on fait appel au
+        // filter (realFilter) pour peupler la liste déroulante
         filterStub.$stateful = true;
         function filterStub(value) {
             if (data === null) {
@@ -125,7 +122,6 @@ angular.module('AnnuaireMuseeApp').controller('AmListMuseeController',
                     AmListCategorieService.getListCategorie()
                         .then(function (categories) {
                             data = categories;
-
                         },
                         function (data) {
                             console.log('categories retrieval failed.');
@@ -137,35 +133,5 @@ angular.module('AnnuaireMuseeApp').controller('AmListMuseeController',
                 return realFilter(value);
             }
         }
-
         return filterStub;
-    });
-
-angular.module('AnnuaireMuseeApp').directive('modal', function () {
-        return {
-            restrict: 'E',
-            scope: {
-                show: '=info'
-            },
-            replace: true, // Replace with the template below
-            transclude: true, // we want to insert custom content inside the directive
-            link: function(scope, element, attrs) {
-                scope.dialogStyle = {};
-                if (attrs.width){
-                    scope.dialogStyle.width = attrs.width;
-                }
-                if (attrs.height){
-                    scope.dialogStyle.height = attrs.height;
-                }
-                scope.hideModal = function() {
-                    scope.show = false;
-                };
-            },
-            template: "<div class='modal-header' ng-show='show'>" +
-            "<div class='ng-modal-overlay' ng-click='hideModal()'></div>" +
-            "<div class='ng-modal-dialog' ng-style='dialogStyle'>" +
-                "<div class='ng-modal-close' ng-click='hideModal()'>X</div>" +
-                "<div class='ng-modal-dialog-content' ng-transclude></div>" +
-            "</div></div>"
-        };
     });

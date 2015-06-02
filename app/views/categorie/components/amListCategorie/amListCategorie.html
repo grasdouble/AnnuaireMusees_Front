@@ -3,13 +3,14 @@
          class="grid"></div>
     <button class="add" ng-click='toggleModal()'>Ajouter une catégorie</button>
 
-    <modal2 title="Ajout d'une catégorie" info="modalShown">
+    <modal title="Ajout d'une catégorie" info="modalShown">
         <form role="form" novalidate>
             <div class="form-group">
                 <label for="label">label</label>
-                <input type="text" class="form-control" id="label" placeholder="label de la catégorie" ng-model="label" />
+                <input type="text" class="form-control" id="label" placeholder="label de la catégorie"
+                       ng-model="label"/>
             </div>
             <input type="submit" class="add btn btn-default" ng-click="createCategorie(label);label='';"/>
         </form>
-    </modal2>
+    </modal>
 </div>
