@@ -1,0 +1,44 @@
+/*Header*/
+#amMenu header {
+    margin-top: -60px;
+    padding: 0;
+    background-color: rgba(255, 255, 255, .2);
+    width: 100%;
+    height: 60px;
+    position: absolute;
+    font-family: "PlayBold";
+
+}
+
+#amMenu header.menu-fixed {
+    margin-top: 0;
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    transition: all 0.3s ease-in-out;
+    color: #555555;
+}
+
+#amMenu .mainNav {
+    width: 100%;
+    text-align: center;
+}
+
+#amMenu .mainNav ul li {
+    padding-top: 15px;
+    padding-left: 25px;
+    padding-right: 25px;
+
+    font-size: 15px;
+    list-style: none;
+    display: inline-block;
+    text-transform: uppercase;
+}
+
+#amMenu .mainNav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+/*End header*/

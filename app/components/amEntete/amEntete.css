@@ -1,0 +1,67 @@
+
+#amEntete {
+    position: relative;
+    width: 100%;
+}
+
+/*Profile teaser*/
+
+#amEntete .profileTeaser {
+    overflow: hidden;
+    position: relative;
+}
+
+#amEntete .profileTeaser .slide li {
+
+    background-size: cover !important;
+    height: 330px !important;
+
+}
+
+#amEntete .profileTeaser .slide {
+    margin: 0;
+    padding: 0;
+}
+
+#amEntete .profileTeaser .slide li:before,
+#amEntete .imgrecognition:before,
+#amEntete .imgTS:before {
+    background: rgba(36, 36, 36, 0.4);
+    content: "";
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 0;
+
+}
+
+#amEntete .caption {
+    top: 48.4%;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    color: #ffffff;
+}
+
+#amEntete .caption h1 {
+    font-family: "Play";
+    color: #ffffff;
+    font-size: 60px;
+    letter-spacing: -1px;
+
+}
+
+#amEntete .caption p {
+    font-family: Play;
+    color: #ffffff;
+    font-size: 12px;
+    line-height: 20px;
+    margin-top: 20px;
+    padding: 0 500px;
+    text-transform: uppercase;
+}
+
+/*End teaser profile*/

@@ -13,7 +13,7 @@ angular.module('AnnuaireMuseeApp').service('AmListMuseeService',
         function getListMusee() {
             var defferer = $q.defer();
 
-            $http.get('http://annuaire-musees-server.dev/musee/full').
+            $http.get('http://back.annuaire.webizone.fr/musee/full').
                 success(function (data) {
                     service.musees = data;
                     defferer.resolve(data);
@@ -27,7 +27,7 @@ angular.module('AnnuaireMuseeApp').service('AmListMuseeService',
         function updateMusee(rowUpdate) {
             var defferer = $q.defer();
 
-            $http.put('http://annuaire-musees-server.dev/musee/', rowUpdate).
+            $http.put('http://back.annuaire.webizone.fr/musee/', rowUpdate).
                 success(function (data) {
                     console.log(data);
                     defferer.resolve(data);
@@ -40,7 +40,7 @@ angular.module('AnnuaireMuseeApp').service('AmListMuseeService',
 
         function deleteMusee(rowDelete) {
             var defferer = $q.defer();
-            $http.delete('http://annuaire-musees-server.dev/musee/'+rowDelete).
+            $http.delete('http://back.annuaire.webizone.fr/musee/'+rowDelete).
                 success(function (data) {
                     console.log(data);
                     defferer.resolve(data);
@@ -53,7 +53,7 @@ angular.module('AnnuaireMuseeApp').service('AmListMuseeService',
 
         function createMusee(nom, description) {
             var defferer = $q.defer();
-            $http.post('http://annuaire-musees-server.dev/musee/', {nom:nom,description:description}).
+            $http.post('http://back.annuaire.webizone.fr/musee/', {nom:nom,description:description}).
                 success(function (data) {
                     console.log(data);
                     defferer.resolve(data);

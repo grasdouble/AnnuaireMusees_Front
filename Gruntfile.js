@@ -249,7 +249,6 @@ module.exports = function (grunt) {
         sro_create_angular_components: {
             AnnuaireMuseeApp: {
                 views: [
-                    "app/views/home",
                     "app/views/musee",
                     "app/views/categorie"
                 ],

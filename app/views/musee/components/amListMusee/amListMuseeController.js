@@ -19,10 +19,10 @@ angular.module('AnnuaireMuseeApp').controller('AmListMuseeController',
             AmListMuseeService.getListMusee()
                 .then(function (musees) {
                     for (i = 0; i < musees.length; i++) {
-                        if (musees[i].categories[0] !== undefined) {
+                        if (musees[i].categories !== null) {
 
                             for (j = 0; j < ctrlMusee.listCateg.length; j++) {
-                                if (musees[i].categories[0].label === ctrlMusee.listCateg[j].label) {
+                                if (musees[i].categories.label === ctrlMusee.listCateg[j].label) {
                                     musees[i].categories = ctrlMusee.listCateg[j].id;
                                 }
                             }
