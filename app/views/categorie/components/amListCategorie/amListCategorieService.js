@@ -1,5 +1,5 @@
 angular.module('AnnuaireMuseeApp').service('AmListCategorieService',
-    function ($http, $q) {
+    function ($http, $q,urls) {
         var srvCategorie = this;
         var service = {
             categories: [],
@@ -14,7 +14,7 @@ angular.module('AnnuaireMuseeApp').service('AmListCategorieService',
         function getListCategorie() {
             var defferer = $q.defer();
 
-            $http.get('http://back.annuaire.webizone.fr/categorie/').
+            $http.get('http://'+urls.environnement+'/categorie/').
                 success(function (data) {
                     service.categories = data;
                     defferer.resolve(data);
@@ -28,7 +28,7 @@ angular.module('AnnuaireMuseeApp').service('AmListCategorieService',
         //Création d'une catégorie
         function createCategorie(label) {
             var defferer = $q.defer();
-            $http.post('http://back.annuaire.webizone.fr/categorie/', {label: label}).
+            $http.post('http://'+urls.environnement+'/categorie/', {label: label}).
                 success(function (data) {
                     defferer.resolve(data);
                 }).
@@ -42,7 +42,7 @@ angular.module('AnnuaireMuseeApp').service('AmListCategorieService',
         function updateCategorie(rowUpdate) {
             var defferer = $q.defer();
 
-            $http.put('http://back.annuaire.webizone.fr/categorie/', rowUpdate).
+            $http.put('http://'+urls.environnement+'/categorie/', rowUpdate).
                 success(function (data) {
                     defferer.resolve(data);
                 }).
@@ -56,7 +56,7 @@ angular.module('AnnuaireMuseeApp').service('AmListCategorieService',
         function deleteCategorie(rowDelete) {
             var defferer = $q.defer();
 
-            $http.delete('http://back.annuaire.webizone.fr/categorie/' + rowDelete).
+            $http.delete('http://'+urls.environnement+'/categorie/' + rowDelete).
                 success(function (data) {
                     defferer.resolve(data);
                 }).

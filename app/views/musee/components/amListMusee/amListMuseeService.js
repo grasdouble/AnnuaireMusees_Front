@@ -1,5 +1,5 @@
 angular.module('AnnuaireMuseeApp').service('AmListMuseeService',
-    function ($http, $q) {
+    function ($http, $q,urls) {
         var srvMusee = this;
         var service = {
             musees: [],
@@ -13,7 +13,7 @@ angular.module('AnnuaireMuseeApp').service('AmListMuseeService',
         //Récupération de la liste des musée
         function getListMusee() {
             var defferer = $q.defer();
-            $http.get('http://back.annuaire.webizone.fr/musee/full').
+            $http.get('http://'+urls.environnement+'/musee/full').
                 success(function (data) {
                     service.musees = data;
                     defferer.resolve(data);
@@ -27,7 +27,7 @@ angular.module('AnnuaireMuseeApp').service('AmListMuseeService',
         //Création d'un musée
         function createMusee(nom, description) {
             var defferer = $q.defer();
-            $http.post('http://back.annuaire.webizone.fr/musee/', {nom: nom, description: description}).
+            $http.post('http://'+urls.environnement+'/musee/', {nom: nom, description: description}).
                 success(function (data) {
                     defferer.resolve(data);
                 }).
@@ -40,7 +40,7 @@ angular.module('AnnuaireMuseeApp').service('AmListMuseeService',
         //Update d'un musée
         function updateMusee(rowUpdate) {
             var defferer = $q.defer();
-            $http.put('http://back.annuaire.webizone.fr/musee/', rowUpdate).
+            $http.put('http://'+urls.environnement+'/musee/', rowUpdate).
                 success(function (data) {
                     defferer.resolve(data);
                 }).
@@ -53,7 +53,7 @@ angular.module('AnnuaireMuseeApp').service('AmListMuseeService',
         //Suppression d'un musée
         function deleteMusee(rowDelete) {
             var defferer = $q.defer();
-            $http.delete('http://back.annuaire.webizone.fr/musee/' + rowDelete).
+            $http.delete('http://'+urls.environnement+'/musee/' + rowDelete).
                 success(function (data) {
                     defferer.resolve(data);
                 }).
